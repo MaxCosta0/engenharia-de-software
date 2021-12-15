@@ -15,5 +15,4 @@ Thalita Alves de Sousa
 
 ## Ferramentas:
 
-Trello: https://trello.com/b/xjwkXYLY
-
+Trello: https://trello.com/b/MQM4Ihfh/kanban-sgh
