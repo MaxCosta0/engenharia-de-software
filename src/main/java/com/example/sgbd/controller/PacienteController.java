@@ -23,7 +23,7 @@ public class PacienteController {
     public ResponseEntity<?> save(@RequestBody @Valid NovoPacienteRequest novoPacienteRequest){
 
         Paciente paciente = novoPacienteRequest.toModel();
-        Paciente pacienteSalvo = pacienteService.save(paciente);
+        pacienteService.save(paciente);
         return ResponseEntity.ok().build();
     }
 
