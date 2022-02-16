@@ -1,15 +1,11 @@
 package com.example.sgbd.controller.dto;
 
 import com.example.sgbd.model.Paciente;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 public class NovoPacienteRequest {
 

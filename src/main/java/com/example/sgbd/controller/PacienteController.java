@@ -1,7 +1,8 @@
 package com.example.sgbd.controller;
 
-import com.example.sgbd.model.Paciente;
 import com.example.sgbd.controller.dto.NovoPacienteRequest;
+import com.example.sgbd.model.Paciente;
+
 import com.example.sgbd.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
