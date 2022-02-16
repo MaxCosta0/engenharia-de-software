@@ -8,11 +8,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Builder
+//@Builder
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "tbl_medico")
+//@Table(name = "tbl_medico")
 public class Medico {
 
     @Id
