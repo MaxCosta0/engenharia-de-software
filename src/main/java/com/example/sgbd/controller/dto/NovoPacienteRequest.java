@@ -1,37 +1,33 @@
 package com.example.sgbd.controller.dto;
 
 import com.example.sgbd.model.Paciente;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class NovoPacienteRequest {
 
-    @NotNull
-    @NotBlank
+    @NotNull @NotBlank
     private String nome;
 
     @NotNull
     private LocalDate dataNascimento;
 
-
-    @NotNull
-    @NotBlank
+    @NotNull @NotBlank
     private String cpf;
 
-    @NotNull
-    @NotBlank
+    @NotNull @NotBlank
     private String telefone;
 
-    @NotNull
-    @NotBlank
-    @Email
+    @NotNull @NotBlank @Email
     private String email;
 
     @NotNull
