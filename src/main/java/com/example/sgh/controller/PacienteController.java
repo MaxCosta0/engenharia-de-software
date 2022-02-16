@@ -1,9 +1,9 @@
-package com.example.sgbd.controller;
+package com.example.sgh.controller;
 
-import com.example.sgbd.controller.dto.DetalhesPaciente;
-import com.example.sgbd.model.Paciente;
-import com.example.sgbd.controller.dto.NovoPacienteRequest;
-import com.example.sgbd.service.PacienteService;
+import com.example.sgh.controller.dto.DetalhesPaciente;
+import com.example.sgh.model.Paciente;
+import com.example.sgh.controller.dto.NovoPacienteRequest;
+import com.example.sgh.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

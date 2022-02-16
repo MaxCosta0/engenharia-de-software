@@ -1,4 +1,4 @@
-package com.example.sgbd;
+package com.example.sgh;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

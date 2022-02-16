@@ -1,4 +1,4 @@
-package com.example.sgbd;
+package com.example.sgh;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

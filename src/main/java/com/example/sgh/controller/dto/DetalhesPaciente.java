@@ -1,6 +1,6 @@
-package com.example.sgbd.controller.dto;
+package com.example.sgh.controller.dto;
 
-import com.example.sgbd.model.Paciente;
+import com.example.sgh.model.Paciente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

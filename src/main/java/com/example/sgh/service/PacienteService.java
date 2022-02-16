@@ -1,8 +1,8 @@
-package com.example.sgbd.service;
+package com.example.sgh.service;
 
-import com.example.sgbd.controller.dto.NovoPacienteRequest;
-import com.example.sgbd.model.Paciente;
-import com.example.sgbd.repository.PacienteRepository;
+import com.example.sgh.controller.dto.NovoPacienteRequest;
+import com.example.sgh.model.Paciente;
+import com.example.sgh.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

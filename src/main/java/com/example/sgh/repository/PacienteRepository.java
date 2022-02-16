@@ -1,6 +1,6 @@
-package com.example.sgbd.repository;
+package com.example.sgh.repository;
 
-import com.example.sgbd.model.Paciente;
+import com.example.sgh.model.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
