@@ -36,7 +36,7 @@ public class MedicoController {
 
     @GetMapping("/{idMedico}")
     public ResponseEntity<DetalhesMedico> detalharMedico(@PathVariable("idMedico") Long idMedico) {
-        Optional<Medico> medicoEncontrado = medicoService.listarMedico(idMedico);
+        Optional<Medico> medicoEncontrado = medicoService.detalharMedico(idMedico);
 
         if(medicoEncontrado.isEmpty()) {
             return ResponseEntity.notFound().build();

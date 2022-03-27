@@ -15,20 +15,22 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
-    public Medico cadastrarMedico(Medico medico){return medicoRepository.save(medico);}
+    public Medico cadastrarMedico(Medico medico) {
+        return medicoRepository.save(medico);
+    }
 
-    public List<Medico> listarTodosMedicos(){
+    public List<Medico> listarTodosMedicos() {
         return medicoRepository.findAll();
     }
 
-    public Optional<Medico> listarMedico(Long idMedico) {
+    public Optional<Medico> detalharMedico(Long idMedico) {
         return medicoRepository.findById(idMedico);
     }
 
     public Medico alterarMedico(Long idMedico, NovoMedicoRequest novoMedicoRequest) {
         Optional<Medico> medicoEncontrado = medicoRepository.findById(idMedico);
 
-        if(medicoEncontrado.isEmpty()){
+        if (medicoEncontrado.isEmpty()) {
             return null;
         }
 
@@ -38,19 +40,16 @@ public class MedicoService {
         return cadastrarMedico(medico);
     }
 
-    public boolean deletarMedico(Long idMedico){
-        Optional<Medico> medicoEncontrado = listarMedico(idMedico);
+    public boolean deletarMedico(Long idMedico) {
+        Optional<Medico> medicoEncontrado = medicoRepository.findById(idMedico);
 
-        if(medicoEncontrado.isEmpty()) {
+        if (medicoEncontrado.isEmpty()) {
             return false;
         }
 
         medicoRepository.deleteById(idMedico);
         return true;
     }
-
-
-
 
 
 }

@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 
 public class NovoMedicoRequest {
 
-
     @NotNull
     @NotBlank
     private String nomeMedico;
