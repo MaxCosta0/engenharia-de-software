@@ -1,3 +1,30 @@
+<?php
+
+require "conexaoMysql.php";
+$pdo = mysqlConnect();
+
+try {
+
+  $sql_1 = <<<SQL
+  SELECT nome, cpf, email, telefone, dataNascimento
+  FROM paciente 
+  SQL;
+
+  $stmt_1 = $pdo->query($sql_1);
+
+  $sql_2 = <<<SQL
+  SELECT nome, cpf, email, telefone, dataNascimento
+  FROM paciente 
+  WHERE nome = ?
+  SQL;
+
+  $stmt_2 = $pdo->prepare($sql_2);
+  $stmt_2->execute([$nome]);
+
+} catch (Exception $e) {
+  exit('Ocorreu uma falha: ' . $e->getMessage());
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -149,7 +176,7 @@
 		</li>
 		<li class="nav-item" role="presentation">
 			<a class="nav-link" id="tabButton3" href="#tabpanel3" data-toggle="tab" role="tab"
-				aria-controls="tabpanel3">Consultar Paciente</a>
+				aria-controls="tabpanel3">Consultar Pacientes</a>
 		</li>
 		<li class="nav-item" role="presentation">
 			<a class="nav-link" id="tabButton4" href="#tabpanel4" data-toggle="tab" role="tab"
@@ -177,7 +204,7 @@
 				<div class="box" id="main_box">
 
 					<!-- Formulário -->
-					<form action="#" name="formCadastroPaciente" method="#">
+					<form action="restritoCadastraPaciente.php" name="formCadastroPaciente" method="POST">
 						<fieldset>
 
 							<h2>Formulário Paciente</h2>
@@ -250,16 +277,15 @@
 										<span></span>
 									</div> -->
 						</fieldset>
+						<div class="row g-3">
+							<div class="col-sm-4"></div>
+							<div class="col-sm-4 divButton">
+								<button type="submit" class="col-12 btn btn-primary btn-sm">Cadastrar</button>
+							</div>
+							<div class="col-sm-4"></div>
+						</div>
 					</form>
 					<!-- Formulário -->
-					
-					<div class="row g-3">
-						<div class="col-sm-4"></div>
-						<div class="col-sm-4 divButton">
-							<button class="col-12 btn btn-primary btn-sm">Cadastrar</button>
-						</div>
-						<div class="col-sm-4"></div>
-					</div>
 
 				</div>
 			</div>
@@ -271,29 +297,36 @@
 			<div class="container">
 				<div class="box" id="main_box">
 
-					<h2>Consultar Paciente</h2>
-					<!--Formulario de consulta-->
-					<div class="row g-3">
-						<div class="col-sm-8">
-							<label for="nome" class="form-label form-label-sm">Nome</label>
-							<input type="text" class="form-control form-control-sm" id="nome" name="nome">
-						</div>
-						<div class="col-sm-4">
-							<label for="cpf" class="form-label form-label-sm">CPF</label>
-							<input type="text" class="form-control form-control-sm" id="cpf" name="cpf">
-						</div>
-						<button class="col-sm-4 btn btn-primary btn-sm" type="button">Buscar</button>
-					</div>
+					<h2>Consultar Pacientes</h2>
 					<!--Tabela de listagem do resultado-->
-					<table class="table-striped">
+					<table class="table">
 						<thead>
+						  <tr>
+							<th scope="col">Nome</th>
+							<th scope="col">CPF</th>
+							<th scope="col">Email</th>
+							<th scope="col">Telefone</th>
+						  </tr>
 
-						</thead>
-						<tbody>
-
-						</tbody>
+						<?php
+						while ($row = $stmt_1->fetch()) {
+				  
+						  $nome = htmlspecialchars($row['nome']);
+						  $cpf = htmlspecialchars($row['cpf']);
+						  $email = htmlspecialchars($row['email']);
+						  $telefone = htmlspecialchars($row['telefone']);
+				  
+						  echo <<<HTML
+									<tr>
+										<td>$nome</td> 
+										<td>$cpf</td>
+										<td>$email</td>
+										<td>$telefone</td>
+									</tr>      
+								HTML;
+							}
+						?>
 					</table>
-
 				</div>
 			</div>	
 		</div>
@@ -306,91 +339,127 @@
 				<div class="box" id="main_box">
 
 					<!-- Formulário -->
-					<form action="#" name="formAlteraPaciente" method="#">
+					<form action="restritoCadastraPaciente.php" name="formAlteraPaciente" method="POST">
 						<fieldset>
 
 							<h2>Alterar Paciente</h2>
 
+							<form action="pesquisaPaciente" name="formConsultaPaciente" method="POST">
+								<fieldset>
+									<div class="col-sm-12">
+									<label for="nome" class="form-label form-label-sm">Insira o nome do paciente</label>
+									<input type="text" class="form-control form-control-sm" id="nomePaciente"name="nomePaciente">
+								</fieldset>
+							</form>
+
+							<form action="#" name="formEditaPaciente" method="POST">
 							<div class="row g-3">
 								<div class="col-sm-8">
 									<label for="nome" class="form-label form-label-sm">Nome</label>
-									<input type="text" class="form-control form-control-sm" id="nome" name="nome"
-										placeholder="Nome - Banco de Dados" disabled="disabled">
+									<input type="text" class="form-control form-control-sm" id="inputNome" name="nome">
 								</div>
 								<div class="col-sm-4">
-									<label for="cpf" class="form-label form-label-sm">CPF</label>
-									<input type="text" class="form-control form-control-sm" id="cpf" name="cpf"
-										placeholder="CPF - Banco de Dados" disabled="disabled">
+								<label for="cpf" class="form-label form-label-sm">CPF</label>
+									<input type="text" class="form-control form-control-sm" id="inputCPF" name="cpf"
+										disabled="disabled">
 								</div>
 								<div class="col-sm-4">
 									<label for="email" class="form-label form-label-sm">E-mail</label>
-									<input type="email" class="form-control form-control-sm" id="email" name="email"
-										placeholder="E-mail - Banco de Dados">
+									<input type="email" class="form-control form-control-sm" id="inputEmail" name="email">
 								</div>
 								<div class="col-sm-4">
 									<label for="telefone" class="form-label form-label-sm">Telefone</label>
-									<input type="tel" class="form-control form-control-sm" id="telefone" name="telefone"
-										placeholder="Telefone - Banco de Dados">
+									<input type="tel" class="form-control form-control-sm" id="inputTelefone" name="telefone">
 								</div>
 								<div class="col-sm-4">
 									<label for="dataNascimento" class="form-label form-label-sm">Data Nascimento</label>
-									<input type="date" class="form-control form-control-sm" id="dataNascimento"
+									<input type="date" class="form-control form-control-sm" id="intuptDN"
 										name="dataNascimento" disabled="disabled">
+								</div>     
+								<div class="row g-3">
+									<div class="col-sm-4"></div>
+									<div class="col-sm-4 divButton">
+										<button class="col-12 btn btn-primary btn-sm">Salvar Alterações</button>
+									</div>
+									<div class="col-sm-4"></div>
 								</div>
-								<!-- <div class="col-sm-8">
-										<label for="logradouro" class="form-label form-label-sm">Logradouro</label>
-										<input type="text" class="form-control form-control-sm" id="logradouro" name="logradouro">
-										<span></span>
-								</div>
-								<div class="col-sm-8">
-									<label for="cidade" class="form-label form-label-sm">Cidade</label>
-									<input type="text" class="form-control form-control-sm" id="cidade" name="cidade">
-									<span></span>
-								</div>
-								<div class="col-sm-4">
-									<label for="estado" class="form-label form-label-sm">Estado</label>
-									<select class="form-select form-select-sm" name="estado" id="estado">
-										<option value="Selecione" selected>Selecione</option>
-										<option value="ACRE">AC</option>
-										<option value="ALAGOAS">AL</option>
-										<option value="AMAPA">AP</option>
-										<option value="AMAZONAS">AM</option>
-										<option value="BAHIA">BA</option>
-										<option value="CEARA">CE</option>
-										<option value="DISTRITO FEDERAL">DF</option>
-										<option value="ESPIRITO SANTO">ES</option>
-										<option value="GOIAS">GO</option>
-										<option value="MARANHAO">MA</option>
-										<option value="MATO GROSSO">MT</option>
-										<option value="MATO GROSSO DO SUL">MS</option>
-										<option value="MINAS GERAIS">MG</option>
-										<option value="PARA">PA</option>
-										<option value="PARAIBA">PB</option>
-										<option value="PARANA">PR</option>
-										<option value="PERNAMBUCO">PE</option>
-										<option value="PIAUI">PI</option>
-										<option value="RIO DE JANEIRO">RJ</option>
-										<option value="RIO GRANDE DO NORTE">RN</option>
-										<option value="RIO GRANDE DO SUL">RS</option>
-										<option value="RONDONIA">RO</option>
-										<option value="RORAIMA">RR</option>
-										<option value="SANTA CATARINA">SC</option>
-										<option value="SAO PAULO">SP</option>
-										<option value="SERGIPE">SE</option>
-										<option value="TOCANTINS">TO</option>
-									</select>
-							</div> -->
+
+								<form>
+									<input type="hidden" id= "123" name="ABC" value="Some Value">
+									<input type="hidden" class="form-control form-control-sm" id="newnome" name="newnome"
+										disabled="disabled">
+								</form>
+
+								<script>
+
+								function buscaPaciente(nomePaciente) {
+
+								let xhr = new XMLHttpRequest();
+								xhr.open("GET", "pesquisaPaciente.php?nomePaciente=" + nomePaciente, true);
+
+								xhr.onload = function () {
+									
+									// verifica o código de status retornado pelo servidor
+									if (xhr.status != 200) {
+									console.error("Falha inesperada: " + xhr.responseText);
+									return;
+									}
+
+									// converte a string JSON para objeto JavaScript
+									try {
+									var paciente = JSON.parse(xhr.responseText);
+									}
+									catch (e) {
+									console.error("String JSON inválida: " + xhr.responseText);
+									return;
+									}
+
+									const teste = document.getElementById("123");
+									const inputNome = document.getElementById("inputNome");
+									const inputCPF = document.getElementById("inputCPF");
+									const inputEmail = document.getElementById("inputEmail");
+									const inputTelefone = document.getElementById("inputTelefone");
+									const inputDataNascimento = document.getElementById("intuptDN");
+
+
+									if (paciente == null){
+										inputNome.value = "null";
+										inputCPF.value = "null";
+										inputEmail.value = "null";
+										inputTelefone.value = "null";
+										inputDataNascimento.value = "null";
+									}
+
+									if (paciente != null){
+										inputNome.value = paciente.nome;
+										inputCPF.value = paciente.cpf;
+										inputEmail.value = paciente.email;
+										inputTelefone.value = paciente.telefone;
+										inputDataNascimento.value = paciente.dataNascimento;
+									}
+
+								}
+
+								xhr.onerror = function () {
+									console.error("Erro de rede - requisição não finalizada");
+								};
+
+								xhr.send();
+								}
+
+								window.onload = function () {
+
+								const inputPaciente = document.querySelector("#nomePaciente");
+
+								inputPaciente.onkeyup = () => buscaPaciente(inputPaciente.value);
+								}
+
+								</script>
 						</fieldset>
+
+						
 					</form>
 					<!-- Formulário -->
-
-					<div class="row g-3">
-						<div class="col-sm-4"></div>
-						<div class="col-sm-4 divButton">
-							<button class="col-12 btn btn-primary btn-sm">Salvar Alterações</button>
-						</div>
-						<div class="col-sm-4"></div>
-					</div>
 			
 				</div>
 			</div>	
